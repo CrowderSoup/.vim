@@ -31,6 +31,8 @@ Plugin 'garbas/vim-snipmate'
 Plugin 'honza/vim-snippets'
 Plugin 'tmux-plugins/vim-tmux'
 Plugin 'wakatime/vim-wakatime'
+Plugin 'ryanoasis/vim-devicons'
+Plugin 'majutsushi/tagbar'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -197,7 +199,7 @@ set background=dark
 " let g:solarized_termcolors=256
 " let g:solarized_termtrans=1
 " colorscheme solarized
-set guifont=Inconsolata:h15
+set guifont=FuraCode_Nerd_Font:h15
 set guioptions-=L
 
 " This comes first, because we have mappings that depend on leader
@@ -485,3 +487,6 @@ let g:multi_cursor_quit_key='<Esc>'
 "to prevent clash with youcompleteme, change snippet trigger
 imap <C-J> <esc>a<Plug>snipMateNextOrTrigger
 smap <C-J> <Plug>snipMateNextOrTrigger
+
+" ========= TagBar ==================================== "
+nmap <leader>tt :TagbarToggle<CR>
