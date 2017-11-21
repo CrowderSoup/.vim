@@ -33,6 +33,9 @@ Plugin 'tmux-plugins/vim-tmux'
 Plugin 'wakatime/vim-wakatime'
 Plugin 'ryanoasis/vim-devicons'
 Plugin 'majutsushi/tagbar'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'tpope/vim-surround'
+Plugin 'dhruvasagar/vim-table-mode'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -198,7 +201,8 @@ endif
 set background=dark
 " let g:solarized_termcolors=256
 " let g:solarized_termtrans=1
-" colorscheme solarized
+set t_Co=256
+colorscheme PaperColor
 set guifont=FuraCode_Nerd_Font:h15
 set guioptions-=L
 
@@ -490,3 +494,20 @@ smap <C-J> <Plug>snipMateNextOrTrigger
 
 " ========= TagBar ==================================== "
 nmap <leader>tt :TagbarToggle<CR>
+
+" ========= TableMode ================================= "
+let g:table_mode_corner='|'
+
+function! s:isAtStartOfLine(mapping)
+  let text_before_cursor = getline('.')[0 : col('.')-1]
+  let mapping_pattern = '\V' . escape(a:mapping, '\')
+  let comment_pattern = '\V' . escape(substitute(&l:commentstring, '%s.*$', '', ''), '\')
+  return (text_before_cursor =~? '^' . ('\v(' . comment_pattern . '\v)?') . '\s*\v' . mapping_pattern . '\v$')
+endfunction
+
+inoreabbrev <expr> <bar><bar>
+          \ <SID>isAtStartOfLine('\|\|') ?
+          \ '<c-o>:TableModeEnable<cr><bar><space><bar><left><left>' : '<bar><bar>'
+inoreabbrev <expr> __
+          \ <SID>isAtStartOfLine('__') ?
+          \ '<c-o>:silent! TableModeDisable<cr>' : '__'
