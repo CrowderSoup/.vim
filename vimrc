@@ -35,7 +35,8 @@ Plugin 'ryanoasis/vim-devicons'
 Plugin 'majutsushi/tagbar'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'tpope/vim-surround'
-Plugin 'dhruvasagar/vim-table-mode'
+Plugin 'tpope/vim-sleuth'
+Plugin 'leafgarland/typescript-vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -396,6 +397,11 @@ nnoremap <leader>gr :YcmCompleter GoToReferences<CR>
 nnoremap <leader>gt :YcmCompleter GetType<CR>
 nnoremap <leader>dc :YcmCompleter GetDoc<CR>
 map :rr :YcmCompleter RefactorRename
+
+if !exists("g:ycm_semantic_triggers")
+  let g:ycm_semantic_triggers = {}
+endif
+let g:ycm_semantic_triggers['typescript'] = ['.']
 
 " ========= A.L.E ===================================== "
 let g:ale_fixers = {
