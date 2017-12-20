@@ -517,3 +517,7 @@ inoreabbrev <expr> <bar><bar>
 inoreabbrev <expr> __
           \ <SID>isAtStartOfLine('__') ?
           \ '<c-o>:silent! TableModeDisable<cr>' : '__'
+
+" ========= vim-jsx =================================== "
+let g:jsx_ext_required = 0
+
