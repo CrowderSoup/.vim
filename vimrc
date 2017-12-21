@@ -21,6 +21,7 @@ Plugin 'vim-airline/vim-airline-themes'
 Plugin 'moll/vim-bbye'
 Plugin 'ap/vim-buftabline'
 Plugin 'ntpeters/vim-better-whitespace'
+Plugin 'tpope/vim-fugitive'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'mhinz/vim-sayonara'
 Plugin 'heavenshell/vim-jsdoc'
@@ -521,3 +522,8 @@ inoreabbrev <expr> __
 " ========= vim-jsx =================================== "
 let g:jsx_ext_required = 0
 
+" ========= Fugitive ================================== "
+nnoremap <leader>ga :Git add %:p<CR><CR>
+nnoremap <leader>gs :Gstatus<CR>
+nnoremap <leader>gp :Gpush<CR>
+vnoremap <leader>gb :Gblame<CR>
