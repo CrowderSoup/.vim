@@ -38,6 +38,7 @@ Plugin 'scrooloose/nerdcommenter'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-sleuth'
 Plugin 'leafgarland/typescript-vim'
+Plugin 'matze/vim-move'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -527,3 +528,6 @@ nnoremap <leader>ga :Git add %:p<CR><CR>
 nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gp :Gpush<CR>
 vnoremap <leader>gb :Gblame<CR>
+
+" ========= Vim-Move ================================== "
+let g:move_key_modifier = 'C'
