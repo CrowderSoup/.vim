@@ -53,6 +53,7 @@ set number                      " Show line numbers
 set backspace=indent,eol,start  " Makes backspace key more powerful.
 set showcmd                     " Show me what I'm typing
 set showmode                    " Show current mode.
+set clipboard=unnamed
 
 set noswapfile                  " Don't use swapfile
 set nobackup                    " Don't create annoying backup files
