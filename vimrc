@@ -40,6 +40,7 @@ Plugin 'tpope/vim-sleuth'
 Plugin 'leafgarland/typescript-vim'
 Plugin 'matze/vim-move'
 Plugin 'dhruvasagar/vim-table-mode'
+Plugin 'fatih/vim-go'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
