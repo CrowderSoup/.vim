@@ -346,7 +346,7 @@ endif
 
 au BufNewFile,BufRead *.vim setlocal noet ts=2 sw=2 sts=2
 au BufNewFile,BufRead *.txt setlocal noet ts=2 sw=2
-au BufNewFile,BufRead *.md setlocal spell noet ts=4 sw=4
+au BufNewFile,BufRead *.md setlocal spell noet ts=2 sw=2
 au BufNewFile,BufRead *.yml,*.yaml setlocal expandtab ts=2 sw=2
 au BufNewFile,BufRead *.json setlocal expandtab ts=2 sw=2
 au BufNewFile,BufRead *.js setlocal expandtab ts=2 sw=2
@@ -362,7 +362,7 @@ au FileType nginx setlocal noet ts=4 sw=4 sts=4
 au BufNewFile,BufRead *.go setlocal noet ts=4 sw=4 sts=4
 
 " Markdown Settings
-autocmd BufNewFile,BufReadPost *.md setl ts=4 sw=4 sts=4 expandtab
+autocmd BufNewFile,BufReadPost *.md setl ts=2 sw=2 sts=2 expandtab
 
 " shell/config/systemd settings
 autocmd FileType gitconfig,sh,toml set noexpandtab
