@@ -504,7 +504,7 @@ imap <C-J> <esc>a<Plug>snipMateNextOrTrigger
 smap <C-J> <Plug>snipMateNextOrTrigger
 
 " ========= TagBar ==================================== "
-nmap <leader>tt :TagbarToggle<CR>
+nmap <F8> :TagbarToggle<CR>
 
 " ========= TableMode ================================= "
 let g:table_mode_corner='|'
