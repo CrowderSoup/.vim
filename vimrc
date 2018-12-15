@@ -1,6 +1,15 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Check python version if available
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if has("python")
+    python import vim; from sys import version_info as v; vim.command('let python_version=%d' % (v[0] * 100 + v[1]))
+else
+    let python_version=0
+endif
+
 " ----------------------------------------- "
 " Plugins       			    			            "
 " ----------------------------------------- "
@@ -8,10 +17,13 @@ filetype off                  " required
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin('~/.vim_plugins')
 
+if python_version >= 207
+  Plugin 'Valloric/YouCompleteMe'
+endif
+
 " ----------------------------------------- "
 "  AutoComplete / Lint                      "
 " ----------------------------------------- "
-Plugin 'Valloric/YouCompleteMe'
 Plugin 'w0rp/ale'
 Plugin 'Raimondi/delimitMate'
 Plugin 'othree/javascript-libraries-syntax.vim'
