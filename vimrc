@@ -17,6 +17,7 @@ endif
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin('~/.vim_plugins')
 
+" We can only use YouCompleteMe if we have Python
 if python_version >= 207
   Plugin 'Valloric/YouCompleteMe'
 endif
