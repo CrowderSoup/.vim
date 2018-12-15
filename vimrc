@@ -8,39 +8,62 @@ filetype off                  " required
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin('~/.vim_plugins')
 
+" ----------------------------------------- "
+"  AutoComplete / Lint                      "
+" ----------------------------------------- "
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'w0rp/ale'
-Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'Raimondi/delimitMate'
-Plugin 'sheerun/vim-polyglot'
 Plugin 'othree/javascript-libraries-syntax.vim'
+Plugin 'heavenshell/vim-jsdoc'
+Plugin 'tmux-plugins/vim-tmux'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-sleuth'
+Plugin 'leafgarland/typescript-vim'
+Plugin 'dhruvasagar/vim-table-mode'
+Plugin 'sheerun/vim-polyglot'
+Plugin 'fatih/vim-go'
+
+" ----------------------------------------- "
+"  Files / Finders                          "
+" ----------------------------------------- "
+Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
+
+" ----------------------------------------- "
+"  Interface / Usability                    "
+" ----------------------------------------- "
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'moll/vim-bbye'
 Plugin 'ap/vim-buftabline'
 Plugin 'ntpeters/vim-better-whitespace'
+Plugin 'mhinz/vim-sayonara'
+Plugin 'terryma/vim-multiple-cursors'
+Plugin 'ryanoasis/vim-devicons'
+Plugin 'majutsushi/tagbar'
+Plugin 'matze/vim-move'
+
+" ----------------------------------------- "
+"  Git Integration                          "
+" ----------------------------------------- "
 Plugin 'tpope/vim-fugitive'
 Plugin 'airblade/vim-gitgutter'
-Plugin 'mhinz/vim-sayonara'
-Plugin 'heavenshell/vim-jsdoc'
-Plugin 'terryma/vim-multiple-cursors'
+
+" ----------------------------------------- "
+"  Snippets                                 "
+" ----------------------------------------- "
 Plugin 'MarcWeber/vim-addon-mw-utils'
 Plugin 'tomtom/tlib_vim'
 Plugin 'garbas/vim-snipmate'
 Plugin 'honza/vim-snippets'
-Plugin 'tmux-plugins/vim-tmux'
+
+" ----------------------------------------- "
+"  Misc                                     "
+" ----------------------------------------- "
 Plugin 'wakatime/vim-wakatime'
-Plugin 'ryanoasis/vim-devicons'
-Plugin 'majutsushi/tagbar'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-sleuth'
-Plugin 'leafgarland/typescript-vim'
-Plugin 'matze/vim-move'
-Plugin 'dhruvasagar/vim-table-mode'
-Plugin 'fatih/vim-go'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
