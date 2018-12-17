@@ -17,14 +17,19 @@ endif
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin('~/.vim_plugins')
 
-" We can only use YouCompleteMe if we have Python
-if python_version >= 207
+" If this is neovim, use deoplete, otherwise use YouCompleteMe
+if has('nvim')
+  Plugin 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  Plugin 'zchee/deoplete-go', { 'do': 'make'}
+elseif python_version >= 207
+  " We can only use YouCompleteMe if we have Python
   Plugin 'Valloric/YouCompleteMe'
 endif
 
 " ----------------------------------------- "
 "  AutoComplete / Lint                      "
 " ----------------------------------------- "
+Plugin 'wellle/tmux-complete.vim'
 Plugin 'w0rp/ale'
 Plugin 'Raimondi/delimitMate'
 Plugin 'othree/javascript-libraries-syntax.vim'
@@ -37,6 +42,9 @@ Plugin 'leafgarland/typescript-vim'
 Plugin 'dhruvasagar/vim-table-mode'
 Plugin 'sheerun/vim-polyglot'
 Plugin 'fatih/vim-go'
+Plugin 'jodosha/vim-godebug'
+Plugin 'godlygeek/tabular'
+Plugin 'plasticboy/vim-markdown'
 
 " ----------------------------------------- "
 "  Files / Finders                          "
@@ -398,7 +406,7 @@ au FileType nginx setlocal noet ts=4 sw=4 sts=4
 au BufNewFile,BufRead *.go setlocal noet ts=4 sw=4 sts=4
 
 " Markdown Settings
-autocmd BufNewFile,BufReadPost *.md setl ts=2 sw=2 sts=2 expandtab
+autocmd BufNewFile,BufReadPost *.md setl ts=4 sw=4 sts=4 expandtab
 
 " shell/config/systemd settings
 autocmd FileType gitconfig,sh,toml set noexpandtab
@@ -432,17 +440,37 @@ set wildignore+=*.orig                           " Merge resolution files
 " ========= Vundle ==================================== "
 map :pi :PluginInstall
 
-" ========= YouCompleteMe ============================= "
-nnoremap <leader>gd :YcmCompleter GoTo<CR>
-nnoremap <leader>gr :YcmCompleter GoToReferences<CR>
-nnoremap <leader>gt :YcmCompleter GetType<CR>
-nnoremap <leader>dc :YcmCompleter GetDoc<CR>
-map :rr :YcmCompleter RefactorRename
+if has('nvim')
+  let g:deoplete#enable_at_startup = 1
+  let g:deoplete#ignore_sources = {}
+  let g:deoplete#ignore_sources._ = ['buffer', 'member', 'tag', 'file', 'neosnippet']
+  let g:deoplete#sources#go#sort_class = ['func', 'type', 'var', 'const']
+  let g:deoplete#sources#go#align_class = 1
 
-if !exists("g:ycm_semantic_triggers")
-  let g:ycm_semantic_triggers = {}
+
+  " Use partial fuzzy matches like YouCompleteMe
+  call deoplete#custom#source('_', 'matchers', ['matcher_fuzzy'])
+  call deoplete#custom#source('_', 'converters', ['converter_remove_paren'])
+  call deoplete#custom#source('_', 'disabled_syntaxes', ['Comment', 'String'])
+
+  inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+elseif python_version >= 207
+  " ========= YouCompleteMe ============================= "
+  nnoremap <leader>gd :YcmCompleter GoTo<CR>
+  nnoremap <leader>gr :YcmCompleter GoToReferences<CR>
+  nnoremap <leader>gt :YcmCompleter GetType<CR>
+  nnoremap <leader>dc :YcmCompleter GetDoc<CR>
+  map :rr :YcmCompleter RefactorRename
+
+  if !exists("g:ycm_semantic_triggers")
+    let g:ycm_semantic_triggers = {}
+  endif
+  let g:ycm_semantic_triggers['typescript'] = ['.']
 endif
-let g:ycm_semantic_triggers['typescript'] = ['.']
+
+" GoDebug
+nnoremap <leader>db :GoDebug<CR>
+nnoremap <leader>bb :GoToggleBreakpoint<CR>
 
 " ========= A.L.E ===================================== "
 let g:ale_fixers = {
@@ -516,8 +544,29 @@ endif
 " ========= vim-better-whitespace ===================== "
 
 " auto strip whitespace except for file with extention blacklisted
-let blacklist = ['markdown', 'md']
-autocmd BufWritePre * StripWhitespace
+let blacklist = ['diff', 'gitcommit', 'unite', 'qf', 'help', 'markdown']
+autocmd BufWritePre * if index(blacklist, &ft) < 0 | StripWhitespace
+
+" ========= vim-markdown ==================
+
+" disable folding
+let g:vim_markdown_folding_disabled = 1
+
+" Allow for the TOC window to auto-fit when it's possible for it to shrink.
+" It never increases its default size (half screen), it only shrinks.
+let g:vim_markdown_toc_autofit = 1
+
+" Disable conceal
+let g:vim_markdown_conceal = 0
+
+" Allow the ge command to follow named anchors in links of the form
+" file#anchor or just #anchor, where file may omit the .md extension as usual
+let g:vim_markdown_follow_anchor = 1
+
+" highlight frontmatter
+let g:vim_markdown_frontmatter = 1
+let g:vim_markdown_toml_frontmatter = 1
+let g:vim_markdown_json_frontmatter = 1
 
 " ========= Sayonara ================================== "
 nnoremap <silent> <leader>q :Sayonara!<CR>
@@ -563,10 +612,7 @@ inoreabbrev <expr> __
 let g:jsx_ext_required = 0
 
 " ========= Fugitive ================================== "
-nnoremap <leader>ga :Git add %:p<CR><CR>
-nnoremap <leader>gs :Gstatus<CR>
-nnoremap <leader>gp :Gpush<CR>
-vnoremap <leader>gb :Gblame<CR>
+nnoremap <leader>gb :Gblame<CR>
 
 " ========= Vim-Move ================================== "
 let g:move_key_modifier = 'C'
