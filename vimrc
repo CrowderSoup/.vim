@@ -1,15 +1,6 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Check python version if available
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-if has("python")
-    python import vim; from sys import version_info as v; vim.command('let python_version=%d' % (v[0] * 100 + v[1]))
-else
-    let python_version=0
-endif
-
 " ----------------------------------------- "
 " Plugins       			    			            "
 " ----------------------------------------- "
@@ -21,14 +12,13 @@ call vundle#begin('~/.vim_plugins')
 if has('nvim')
   Plugin 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
   Plugin 'zchee/deoplete-go', { 'do': 'make'}
-elseif python_version >= 207
-  " We can only use YouCompleteMe if we have Python
-  Plugin 'Valloric/YouCompleteMe'
+  Plugin 'jodosha/vim-godebug'
 endif
 
 " ----------------------------------------- "
 "  AutoComplete / Lint                      "
 " ----------------------------------------- "
+Plugin 'Valloric/YouCompleteMe'
 Plugin 'wellle/tmux-complete.vim'
 Plugin 'w0rp/ale'
 Plugin 'Raimondi/delimitMate'
@@ -42,7 +32,7 @@ Plugin 'leafgarland/typescript-vim'
 Plugin 'dhruvasagar/vim-table-mode'
 Plugin 'sheerun/vim-polyglot'
 Plugin 'fatih/vim-go'
-Plugin 'jodosha/vim-godebug'
+Plugin 'nsf/gocode', {'rtp': 'vim/'}
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
 
@@ -440,42 +430,42 @@ set wildignore+=*.orig                           " Merge resolution files
 " ========= Vundle ==================================== "
 map :pi :PluginInstall
 
-if has('nvim')
-  let g:deoplete#enable_at_startup = 1
-  let g:deoplete#ignore_sources = {}
-  let g:deoplete#ignore_sources._ = ['buffer', 'member', 'tag', 'file', 'neosnippet']
-  let g:deoplete#sources#go#sort_class = ['func', 'type', 'var', 'const']
-  let g:deoplete#sources#go#align_class = 1
+" ========= YouCompleteMe ============================= "
+nnoremap <leader>gd :YcmCompleter GoTo<CR>
+nnoremap <leader>gr :YcmCompleter GoToReferences<CR>
+nnoremap <leader>gt :YcmCompleter GetType<CR>
+nnoremap <leader>dc :YcmCompleter GetDoc<CR>
+map :rr :YcmCompleter RefactorRename
 
+let g:ycm_semantic_triggers =  {
+      \   'c': ['->', '.'],
+      \   'objc': ['->', '.', 're!\[[_a-zA-Z]+\w*\s', 're!^\s*[^\W\d]\w*\s',
+      \            're!\[.*\]\s'],
+      \   'ocaml': ['.', '#'],
+      \   'cpp,cuda,objcpp': ['->', '.', '::'],
+      \   'perl': ['->'],
+      \   'php': ['->', '::'],
+      \   'cs,d,elixir,go,groovy,java,javascript,typescript,julia,perl6,python,scala,typescript,vb': ['.'],
+      \   'ruby,rust': ['.', '::'],
+      \   'lua': ['.', ':'],
+      \   'erlang': [':'],
+      \ }
 
-  " Use partial fuzzy matches like YouCompleteMe
-  call deoplete#custom#source('_', 'matchers', ['matcher_fuzzy'])
-  call deoplete#custom#source('_', 'converters', ['converter_remove_paren'])
-  call deoplete#custom#source('_', 'disabled_syntaxes', ['Comment', 'String'])
+" use goimports for formatting
+let g:go_fmt_command = "goimports"
 
-  inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-elseif python_version >= 207
-  " ========= YouCompleteMe ============================= "
-  nnoremap <leader>gd :YcmCompleter GoTo<CR>
-  nnoremap <leader>gr :YcmCompleter GoToReferences<CR>
-  nnoremap <leader>gt :YcmCompleter GetType<CR>
-  nnoremap <leader>dc :YcmCompleter GetDoc<CR>
-  map :rr :YcmCompleter RefactorRename
-
-  if !exists("g:ycm_semantic_triggers")
-    let g:ycm_semantic_triggers = {}
-  endif
-  let g:ycm_semantic_triggers['typescript'] = ['.']
-endif
-
-" GoDebug
-nnoremap <leader>db :GoDebug<CR>
-nnoremap <leader>bb :GoToggleBreakpoint<CR>
+" turn highlighting on
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_structs = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_build_constraints = 1
 
 " ========= A.L.E ===================================== "
 let g:ale_fixers = {
-\   'javascript': ['eslint'],
-\}
+  \   'javascript': ['eslint'],
+  \   'go': ['gofmt', 'goimports']
+  \ }
 let g:ale_fix_on_save = 1
 nmap <silent> <C-a> <Plug>(ale_previous_wrap)
 nmap <silent> <C-s> <Plug>(ale_next_wrap)
