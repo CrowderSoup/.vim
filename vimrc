@@ -8,13 +8,6 @@ filetype off                  " required
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin('~/.vim_plugins')
 
-" If this is neovim, use deoplete, otherwise use YouCompleteMe
-if has('nvim')
-  Plugin 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-  Plugin 'zchee/deoplete-go', { 'do': 'make'}
-  Plugin 'jodosha/vim-godebug'
-endif
-
 " ----------------------------------------- "
 "  AutoComplete / Lint                      "
 " ----------------------------------------- "
