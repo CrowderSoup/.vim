@@ -28,6 +28,8 @@ Plugin 'fatih/vim-go'
 Plugin 'nsf/gocode', {'rtp': 'vim/'}
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
+Plugin 'hashivim/vim-terraform'
+Plugin 'juliosueiras/vim-terraform-completion'
 
 " ----------------------------------------- "
 "  Files / Finders                          "
@@ -442,6 +444,7 @@ let g:ycm_semantic_triggers =  {
       \   'ruby,rust': ['.', '::'],
       \   'lua': ['.', ':'],
       \   'erlang': [':'],
+      \   'terraform,tf': ['[^ *\t"{=$]\w*']
       \ }
 
 " use goimports for formatting
@@ -484,15 +487,12 @@ func! MyCtrlPTag()
         \ 'AcceptSelection("e")': ['<cr>', '<2-LeftMouse>'],
         \ 'AcceptSelection("t")': ['<c-t>'],
         \ }
-  CtrlPBufTag
+  CtrlPBuffer
 endfunc
 command! MyCtrlPTag call MyCtrlPTag()
 
 nmap <C-g> :MyCtrlPTag<cr>
 imap <C-g> <esc>:MyCtrlPTag<cr>
-
-nmap <C-b> :CtrlPCurWD<cr>
-imap <C-b> <esc>:CtrlPCurWD<cr>
 
 " ========= delimitMate =============================== "
 let g:delimitMate_expand_cr = 1
@@ -550,6 +550,12 @@ let g:vim_markdown_follow_anchor = 1
 let g:vim_markdown_frontmatter = 1
 let g:vim_markdown_toml_frontmatter = 1
 let g:vim_markdown_json_frontmatter = 1
+
+" ========= Terraform ================================= "
+let g:terraform_align=1
+let g:terraform_fold_sections=1
+let g:terraform_commentstring='//%s'
+let g:terraform_fmt_on_save=1
 
 " ========= Sayonara ================================== "
 nnoremap <silent> <leader>q :Sayonara!<CR>
