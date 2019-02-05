@@ -28,8 +28,9 @@ Plugin 'fatih/vim-go'
 Plugin 'nsf/gocode', {'rtp': 'vim/'}
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
-Plugin 'hashivim/vim-terraform'
-Plugin 'juliosueiras/vim-terraform-completion'
+Plugin 'vim-ruby/vim-ruby'
+Plugin 'tpope/vim-rails'
+Plugin 'diepm/vim-rest-console'
 
 " ----------------------------------------- "
 "  Files / Finders                          "
@@ -258,8 +259,11 @@ autocmd FileType qf wincmd J
 ":cn      next error
 ":cp      previous error
 ":clist   list all errors
-map <C-n> :cn<CR>
-map <C-m> :cp<CR>
+nnoremap <leader>s :cclose<CR>
+nnoremap <leader>a :copen<CR>
+nnoremap <leader>n :cn<CR>
+nnoremap <leader>p :cp<CR>
+nnoremap <leader>l :clist<CR>
 
 " Replace the current buffer with the given new file. That means a new file
 " " will be open in a buffer while the old one will be deleted
@@ -286,9 +290,6 @@ function! DeleteInactiveBufs()
 endfunction
 
 command! Ball :call DeleteInactiveBufs()
-
-" Close quickfix easily
-nnoremap <leader>a :cclose<CR>
 
 " Remove search highlight
 nnoremap <leader><space> :nohlsearch<CR>
@@ -462,6 +463,9 @@ let g:ale_fixers = {
   \   'javascript': ['eslint'],
   \   'go': ['gofmt', 'goimports']
   \ }
+let g:ale_linters = {
+  \   'go': ['gometalinter']
+  \ }
 let g:ale_fix_on_save = 1
 nmap <silent> <C-a> <Plug>(ale_previous_wrap)
 nmap <silent> <C-s> <Plug>(ale_next_wrap)
@@ -504,8 +508,7 @@ let g:delimitMate_smart_matchpairs = '^\%(\w\|\$\)'
 "========== NerdTree ================================== "
 " For toggling
 nmap <C-n> :NERDTreeToggle<CR>
-noremap <leader>n :NERDTreeToggle<cr>
-noremap <leader>f :NERDTreeFind<cr>
+nmap <C-f> :NERDTreeFind<CR>
 
 let NERDTreeShowHidden=1
 
@@ -605,3 +608,6 @@ nnoremap <leader>gb :Gblame<CR>
 
 " ========= Vim-Move ================================== "
 let g:move_key_modifier = 'C'
+
+" ========= Vim Rest Client =========================== "
+let g:vrc_output_buffer_name = '__VRC_OUTPUT.json'
