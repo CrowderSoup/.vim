@@ -254,15 +254,19 @@ let g:mapleader = ","
 " the very bottom (see :help :wincmd and :help ^WJ).
 autocmd FileType qf wincmd J
 
-" Some useful quickfix shortcuts
+" Some useful quickfix/location list shortcuts
 ":cc      see the current error
 ":cn      next error
 ":cp      previous error
 ":clist   list all errors
 nnoremap <leader>s :cclose<CR>
+nnoremap <leader>ls :lclose<CR>
 nnoremap <leader>a :copen<CR>
+nnoremap <leader>la :lopen<CR>
 nnoremap <leader>n :cn<CR>
+nnoremap <leader>ln :ln<CR>
 nnoremap <leader>p :cp<CR>
+nnoremap <leader>lp :lp<CR>
 nnoremap <leader>l :clist<CR>
 
 " Replace the current buffer with the given new file. That means a new file
