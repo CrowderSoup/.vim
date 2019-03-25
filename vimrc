@@ -9,9 +9,15 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin('~/.vim_plugins')
 
 " ----------------------------------------- "
+"  Plugins Needing Python                   "
+" ----------------------------------------- "
+if has('python')
+  Plugin 'Valloric/YouCompleteMe'
+endif
+
+" ----------------------------------------- "
 "  AutoComplete / Lint                      "
 " ----------------------------------------- "
-Plugin 'Valloric/YouCompleteMe'
 Plugin 'wellle/tmux-complete.vim'
 Plugin 'w0rp/ale'
 Plugin 'Raimondi/delimitMate'
