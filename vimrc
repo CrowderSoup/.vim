@@ -11,7 +11,7 @@ call vundle#begin('~/.vim_plugins')
 " ----------------------------------------- "
 "  Plugins Needing Python                   "
 " ----------------------------------------- "
-if has('python')
+if has('macunix') && (has('python') || has('python3'))
   Plugin 'Valloric/YouCompleteMe'
 endif
 
