@@ -77,6 +77,7 @@ Plugin 'honza/vim-snippets'
 "  Misc                                     "
 " ----------------------------------------- "
 Plugin 'wakatime/vim-wakatime'
+Plugin 'dbeniamine/todo.txt-vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -621,3 +622,9 @@ let g:move_key_modifier = 'C'
 
 " ========= Vim Rest Client =========================== "
 let g:vrc_output_buffer_name = '__VRC_OUTPUT.json'
+
+" ========= Vim Todo.txt =========================== "
+au filetype todo setlocal omnifunc=todo#Complete
+au filetype todo imap <buffer> + +<C-X><C-O>
+au filetype todo imap <buffer> @ @<C-X><C-O>
+
