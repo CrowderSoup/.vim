@@ -157,7 +157,7 @@ set ttimeoutlen=10
 
 " Better Completion
 set complete=.,w,b,u,t
-set completeopt=longest,menuone
+set completeopt=menu,menuone,preview,noselect,noinsert
 
 if &history < 1000
   set history=50
@@ -438,12 +438,6 @@ set wildignore+=*.orig                           " Merge resolution files
 map :pi :PluginInstall
 
 " ========= YouCompleteMe ============================= "
-nnoremap <leader>gd :YcmCompleter GoTo<CR>
-nnoremap <leader>gr :YcmCompleter GoToReferences<CR>
-nnoremap <leader>gt :YcmCompleter GetType<CR>
-nnoremap <leader>dc :YcmCompleter GetDoc<CR>
-map :rr :YcmCompleter RefactorRename
-
 let g:ycm_semantic_triggers =  {
       \   'c': ['->', '.'],
       \   'objc': ['->', '.', 're!\[[_a-zA-Z]+\w*\s', 're!^\s*[^\W\d]\w*\s',
@@ -452,15 +446,12 @@ let g:ycm_semantic_triggers =  {
       \   'cpp,cuda,objcpp': ['->', '.', '::'],
       \   'perl': ['->'],
       \   'php': ['->', '::'],
-      \   'cs,d,elixir,go,groovy,java,javascript,typescript,julia,perl6,python,scala,typescript,vb': ['.'],
+      \   'cs,d,elixir,groovy,java,javascript,typescript,julia,perl6,python,scala,typescript,vb': ['.'],
       \   'ruby,rust': ['.', '::'],
       \   'lua': ['.', ':'],
       \   'erlang': [':'],
       \   'terraform,tf': ['[^ *\t"{=$]\w*']
       \ }
-
-" use goimports for formatting
-let g:go_fmt_command = "goimports"
 
 " turn highlighting on
 let g:go_highlight_functions = 1
@@ -470,16 +461,26 @@ let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
 
 " ========= A.L.E ===================================== "
+" Key Mapping
+nnoremap <leader>gd :ALEGoToDefinition<CR>
+nnoremap <leader>gr :ALEFindReferences<CR>
+nnoremap <leader>gt :ALEHover<CR>
+nmap <silent> <C-a> <Plug>(ale_previous_wrap)
+nmap <silent> <C-s> <Plug>(ale_next_wrap)
+
 let g:ale_fixers = {
   \   'javascript': ['eslint'],
   \   'go': ['gofmt', 'goimports']
   \ }
+
 let g:ale_linters = {
-  \   'go': ['gometalinter']
+  \   'go': ['govet', 'gofmt', 'golint', 'bingo']
   \ }
+
+" Turn some things on
 let g:ale_fix_on_save = 1
-nmap <silent> <C-a> <Plug>(ale_previous_wrap)
-nmap <silent> <C-s> <Plug>(ale_next_wrap)
+let g:ale_completion_enabled = 1
+let g:airline#extensions#ale#enabled = 1
 
 " ========= CtrlP ===================================== "
 let g:ctrlp_cmd = 'CtrlP'
