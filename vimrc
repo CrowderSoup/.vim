@@ -37,6 +37,7 @@ Plugin 'plasticboy/vim-markdown'
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'tpope/vim-rails'
 Plugin 'diepm/vim-rest-console'
+Plugin 'tpope/vim-dadbod'
 
 " ----------------------------------------- "
 "  Files / Finders                          "
@@ -246,7 +247,7 @@ set background=dark
 " let g:solarized_termtrans=1
 set t_Co=256
 colorscheme PaperColor
-set guifont=FuraCode_Nerd_Font:h15
+set guifont=Fira\ Code:h15
 set guioptions-=L
 
 " This comes first, because we have mappings that depend on leader
