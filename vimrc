@@ -37,7 +37,6 @@ Plugin 'plasticboy/vim-markdown'
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'tpope/vim-rails'
 Plugin 'diepm/vim-rest-console'
-Plugin 'tpope/vim-dadbod'
 
 " ----------------------------------------- "
 "  Files / Finders                          "
