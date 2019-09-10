@@ -78,10 +78,14 @@ Plugin 'honza/vim-snippets'
 " ----------------------------------------- "
 Plugin 'wakatime/vim-wakatime'
 Plugin 'dbeniamine/todo.txt-vim'
+Plugin 'tpope/vim-dadbod'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
+
+" Source My Helpers
+source ~/.vim/helpers.vim
 
 "
 " Settings
@@ -524,7 +528,7 @@ nmap <C-f> :NERDTreeFind<CR>
 
 let NERDTreeShowHidden=1
 
-let NERDTreeIgnore=['\.vim$', '\~$', '\.git$', '.DS_Store', 'node_modules']
+let NERDTreeIgnore=['\~$', '\.git$', '.DS_Store', 'node_modules']
 
 " Close nerdtree and vim on close file
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
@@ -628,4 +632,52 @@ let g:vrc_output_buffer_name = '__VRC_OUTPUT.json'
 au filetype todo setlocal omnifunc=todo#Complete
 au filetype todo imap <buffer> + +<C-X><C-O>
 au filetype todo imap <buffer> @ @<C-X><C-O>
+
+" ========= Vim DadBod ============================== "
+"" operator mapping
+func! DBExe(...)
+	if !a:0
+		let &operatorfunc = matchstr(expand('<sfile>'), '[^. ]*$')
+		return 'g@'
+	endif
+	let sel_save = &selection
+	let &selection = "inclusive"
+	let reg_save = @@
+
+	if a:1 == 'char'	" Invoked from Visual mode, use gv command.
+		silent exe 'normal! gvy'
+	elseif a:1 == 'line'
+		silent exe "normal! '[V']y"
+	else
+		silent exe 'normal! `[v`]y'
+	endif
+
+	execute "DB " . @@
+
+	let &selection = sel_save
+	let @@ = reg_save
+endfunc
+
+" Source my Config
+call SourceIfExists("~/.local_config/dadbod.vim")
+
+command! DBSelect :call popup_menu(map(copy(g:dadbods), {k,v -> v.name}), #{
+			\callback: 'DBSelected'
+			\})
+
+func! DBSelected(id, result)
+	if a:result != -1
+		let b:db = g:dadbods[a:result-1].url
+		echomsg 'DB ' . g:dadbods[a:result-1].name . ' is selected.'
+	endif
+endfunc
+
+xnoremap <expr> <Plug>(DBExe)     DBExe()
+nnoremap <expr> <Plug>(DBExe)     DBExe()
+nnoremap <expr> <Plug>(DBExeLine) DBExe() . '_'
+
+xmap <leader>db  <Plug>(DBExe)
+nmap <leader>db  <Plug>(DBExe)
+omap <leader>db  <Plug>(DBExe)
+nmap <leader>dbb <Plug>(DBExeLine)
 
