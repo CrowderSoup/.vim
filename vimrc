@@ -41,7 +41,7 @@ Plugin 'diepm/vim-rest-console'
 " ----------------------------------------- "
 "  Files / Finders                          "
 " ----------------------------------------- "
-Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'junegunn/fzf.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 
@@ -474,45 +474,31 @@ nmap <silent> <C-s> <Plug>(ale_next_wrap)
 
 let g:ale_fixers = {
   \   'javascript': ['eslint'],
-  \   'go': ['gofmt', 'goimports']
+  \   'go': ['gofmt', 'goimports'],
+  \   'python': ['autopep8']
   \ }
 
 let g:ale_linters = {
-  \   'go': ['govet', 'gofmt', 'golint', 'bingo']
+  \   'go': ['govet', 'gofmt', 'golint', 'bingo'],
   \ }
+
+" Python Config
+let g:ale_python_pylint_options = '--load-plugins pylint_sqlalchemy'
 
 " Turn some things on
 let g:ale_fix_on_save = 1
 let g:ale_completion_enabled = 1
 let g:airline#extensions#ale#enabled = 1
 
-" ========= CtrlP ===================================== "
-let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_working_path_mode = 'ra'
-let g:ctrlp_max_height = 10		" maxiumum height of match window
-let g:ctrlp_switch_buffer = 'et'	" jump to a file if it's open already
-let g:ctrlp_mruf_max=450 		" number of recently opened files
-let g:ctrlp_max_files=0  		" do not limit the number of searchable files
-let g:ctrlp_use_caching = 1
-let g:ctrlp_clear_cache_on_exit = 0
-let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'
-let g:ctrlp_custom_ignore = {
-  \ 'dir': '\v[\/]\.(git|hg|svn)|node_modules$'
-  \ }
+" ========= fzf ======================================= "
+set rtp+=/usr/local/opt/fzf
+function! s:find_git_root()
+  return system('git rev-parse --show-toplevel 2> /dev/null')[:-2]
+endfunction
 
-let g:ctrlp_buftag_types = {'go' : '--language-force=go --golang-types=ftv'}
+command! ProjectFiles execute 'Files' s:find_git_root()
 
-func! MyCtrlPTag()
-  let g:ctrlp_prompt_mappings = {
-        \ 'AcceptSelection("e")': ['<cr>', '<2-LeftMouse>'],
-        \ 'AcceptSelection("t")': ['<c-t>'],
-        \ }
-  CtrlPBuffer
-endfunc
-command! MyCtrlPTag call MyCtrlPTag()
-
-nmap <C-g> :MyCtrlPTag<cr>
-imap <C-g> <esc>:MyCtrlPTag<cr>
+map <C-p> :ProjectFiles<CR>
 
 " ========= delimitMate =============================== "
 let g:delimitMate_expand_cr = 1
@@ -523,12 +509,13 @@ let g:delimitMate_smart_matchpairs = '^\%(\w\|\$\)'
 
 "========== NerdTree ================================== "
 " For toggling
-nmap <C-n> :NERDTreeToggle<CR>
+command! NTToggle execute 'NERDTreeToggle' s:find_git_root()
+nmap <C-n> :NTToggle<CR>
 nmap <C-f> :NERDTreeFind<CR>
 
 let NERDTreeShowHidden=1
 
-let NERDTreeIgnore=['\~$', '\.git$', '.DS_Store', 'node_modules']
+let NERDTreeIgnore=['\~$', '\.git$', '.DS_Store', 'node_modules', '.vscode','.venv','__pycache__', '.pyc']
 
 " Close nerdtree and vim on close file
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
@@ -621,9 +608,6 @@ let g:jsx_ext_required = 0
 
 " ========= Fugitive ================================== "
 nnoremap <leader>gb :Gblame<CR>
-
-" ========= Vim-Move ================================== "
-let g:move_key_modifier = 'C'
 
 " ========= Vim Rest Client =========================== "
 let g:vrc_output_buffer_name = '__VRC_OUTPUT.json'
