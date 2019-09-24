@@ -37,6 +37,7 @@ Plugin 'plasticboy/vim-markdown'
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'tpope/vim-rails'
 Plugin 'diepm/vim-rest-console'
+Plugin 'mattn/emmet-vim'
 
 " ----------------------------------------- "
 "  Files / Finders                          "
@@ -144,6 +145,9 @@ set autoindent
 set complete-=i
 set showmatch
 set smarttab
+
+" Fix indentation
+map <F7> gg=G<C-o><C-o>
 
 set et
 set tabstop=2
@@ -475,11 +479,14 @@ nmap <silent> <C-s> <Plug>(ale_next_wrap)
 let g:ale_fixers = {
   \   'javascript': ['eslint'],
   \   'go': ['gofmt', 'goimports'],
-  \   'python': ['autopep8']
+  \   'python': ['autopep8'],
+  \   'ruby': ['rubocop']
   \ }
 
 let g:ale_linters = {
   \   'go': ['govet', 'gofmt', 'golint', 'bingo'],
+  \   'python': ['pylint'],
+  \   'ruby': ['rubocop', 'solargraph']
   \ }
 
 " Python Config
@@ -665,3 +672,5 @@ nmap <leader>db  <Plug>(DBExe)
 omap <leader>db  <Plug>(DBExe)
 nmap <leader>dbb <Plug>(DBExeLine)
 
+" ================== Emmet-Vim ========================="
+let g:user_emmet_leader_key='<A-Z>'
