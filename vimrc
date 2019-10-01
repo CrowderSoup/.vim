@@ -1,6 +1,9 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
+" Some plugins are hosted on GitLab, thus:
+let gitlab = 'https://gitlab.com/'
+
 " ----------------------------------------- "
 " Plugins       			    			            "
 " ----------------------------------------- "
@@ -78,7 +81,7 @@ Plugin 'honza/vim-snippets'
 "  Misc                                     "
 " ----------------------------------------- "
 Plugin 'wakatime/vim-wakatime'
-Plugin 'dbeniamine/todo.txt-vim'
+Plugin gitlab.'dbeniamine/todo.txt-vim'
 Plugin 'tpope/vim-dadbod'
 
 " All of your Plugins must be added before the following line
@@ -615,14 +618,13 @@ let g:jsx_ext_required = 0
 
 " ========= Fugitive ================================== "
 nnoremap <leader>gb :Gblame<CR>
+nnoremap <leader>gw :Gwrite<CR>
 
 " ========= Vim Rest Client =========================== "
 let g:vrc_output_buffer_name = '__VRC_OUTPUT.json'
 
 " ========= Vim Todo.txt =========================== "
 au filetype todo setlocal omnifunc=todo#Complete
-au filetype todo imap <buffer> + +<C-X><C-O>
-au filetype todo imap <buffer> @ @<C-X><C-O>
 
 " ========= Vim DadBod ============================== "
 "" operator mapping
