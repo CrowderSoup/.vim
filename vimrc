@@ -653,7 +653,7 @@ func! DBExe(...)
 endfunc
 
 " Source my Config
-"call SourceIfExists("~/.local_config/dadbod.vim")
+call SourceIfExists("~/.local_config/dadbod.vim")
 
 command! DBSelect :call popup_menu(map(copy(g:dadbods), {k,v -> v.name}), #{
       \callback: 'DBSelected'
