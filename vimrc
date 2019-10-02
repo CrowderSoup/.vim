@@ -12,15 +12,23 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin('~/.vim_plugins')
 
 " ----------------------------------------- "
-"  Plugins Needing Python                   "
+"  NVIM VS. VIM                             "
 " ----------------------------------------- "
-if has('macunix') && (has('python') || has('python3'))
-  Plugin 'Valloric/YouCompleteMe'
+if has('nvim')
+  Plugin 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plugin 'Shougo/deoplete.nvim'
+  Plugin 'roxma/nvim-yarp'
+  Plugin 'roxma/vim-hug-neovim-rpc'
 endif
 
 " ----------------------------------------- "
 "  AutoComplete / Lint                      "
 " ----------------------------------------- "
+Plugin 'prabirshrestha/asyncomplete.vim'
+Plugin 'prabirshrestha/async.vim'
+Plugin 'prabirshrestha/vim-lsp'
+Plugin 'prabirshrestha/asyncomplete-lsp.vim'
 Plugin 'wellle/tmux-complete.vim'
 Plugin 'w0rp/ale'
 Plugin 'Raimondi/delimitMate'
@@ -33,7 +41,7 @@ Plugin 'tpope/vim-sleuth'
 Plugin 'leafgarland/typescript-vim'
 Plugin 'dhruvasagar/vim-table-mode'
 Plugin 'sheerun/vim-polyglot'
-Plugin 'fatih/vim-go'
+Plugin 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plugin 'nsf/gocode', {'rtp': 'vim/'}
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
@@ -242,7 +250,7 @@ autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * if mode() != 'c' | checkti
 " Notification after file change
 " https://vi.stackexchange.com/questions/13091/autocmd-event-for-autoread
 autocmd FileChangedShellPost *
-  \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
+      \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
 
 
 syntax enable
@@ -448,30 +456,20 @@ set wildignore+=*.orig                           " Merge resolution files
 " ========= Vundle ==================================== "
 map :pi :PluginInstall
 
-" ========= YouCompleteMe ============================= "
-let g:ycm_semantic_triggers =  {
-      \   'c': ['->', '.'],
-      \   'objc': ['->', '.', 're!\[[_a-zA-Z]+\w*\s', 're!^\s*[^\W\d]\w*\s',
-      \            're!\[.*\]\s'],
-      \   'ocaml': ['.', '#'],
-      \   'cpp,cuda,objcpp': ['->', '.', '::'],
-      \   'perl': ['->'],
-      \   'php': ['->', '::'],
-      \   'cs,d,elixir,groovy,java,javascript,typescript,julia,perl6,python,scala,typescript,vb': ['.'],
-      \   'ruby,rust': ['.', '::'],
-      \   'lua': ['.', ':'],
-      \   'erlang': [':'],
-      \   'terraform,tf': ['[^ *\t"{=$]\w*']
-      \ }
+" ========= deoplete ================================== "
+let g:deoplete#enable_at_startup = 1
+call deoplete#custom#option({
+\ 'auto_refresh_delay': 0,
+\ 'num_processes': 5,
+\ })
 
-" turn highlighting on
-let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_structs = 1
-let g:go_highlight_operators = 1
-let g:go_highlight_build_constraints = 1
+if !has('nvim')
+  call deoplete#custom#option('yarp', v:true)
+endif
 
 " ========= A.L.E ===================================== "
+" AutoComplete
+
 " Key Mapping
 nnoremap <leader>gd :ALEGoToDefinition<CR>
 nnoremap <leader>gr :ALEFindReferences<CR>
@@ -480,25 +478,25 @@ nmap <silent> <C-a> <Plug>(ale_previous_wrap)
 nmap <silent> <C-s> <Plug>(ale_next_wrap)
 
 let g:ale_fixers = {
-  \   'javascript': ['eslint'],
-  \   'go': ['gofmt', 'goimports'],
-  \   'python': ['autopep8'],
-  \   'ruby': ['rubocop']
-  \ }
+      \   'javascript': ['eslint'],
+      \   'go': ['gofmt', 'goimports'],
+      \   'python': ['autopep8'],
+      \ }
 
 let g:ale_linters = {
-  \   'go': ['govet', 'gofmt', 'golint', 'bingo'],
-  \   'python': ['pylint'],
-  \   'ruby': ['rubocop', 'solargraph']
-  \ }
+      \   'go': ['govet', 'gofmt', 'golint', 'bingo'],
+      \   'python': ['pylint'],
+      \ }
 
 " Python Config
 let g:ale_python_pylint_options = '--load-plugins pylint_sqlalchemy'
 
 " Turn some things on
 let g:ale_fix_on_save = 1
-let g:ale_completion_enabled = 1
 let g:airline#extensions#ale#enabled = 1
+
+" AutoComplete
+let g:ale_completion_enabled = 0
 
 " ========= fzf ======================================= "
 set rtp+=/usr/local/opt/fzf
@@ -607,11 +605,11 @@ function! s:isAtStartOfLine(mapping)
 endfunction
 
 inoreabbrev <expr> <bar><bar>
-          \ <SID>isAtStartOfLine('\|\|') ?
-          \ '<c-o>:TableModeEnable<cr><bar><space><bar><left><left>' : '<bar><bar>'
+      \ <SID>isAtStartOfLine('\|\|') ?
+      \ '<c-o>:TableModeEnable<cr><bar><space><bar><left><left>' : '<bar><bar>'
 inoreabbrev <expr> __
-          \ <SID>isAtStartOfLine('__') ?
-          \ '<c-o>:silent! TableModeDisable<cr>' : '__'
+      \ <SID>isAtStartOfLine('__') ?
+      \ '<c-o>:silent! TableModeDisable<cr>' : '__'
 
 " ========= vim-jsx =================================== "
 let g:jsx_ext_required = 0
@@ -629,40 +627,40 @@ au filetype todo setlocal omnifunc=todo#Complete
 " ========= Vim DadBod ============================== "
 "" operator mapping
 func! DBExe(...)
-	if !a:0
-		let &operatorfunc = matchstr(expand('<sfile>'), '[^. ]*$')
-		return 'g@'
-	endif
-	let sel_save = &selection
-	let &selection = "inclusive"
-	let reg_save = @@
+  if !a:0
+    let &operatorfunc = matchstr(expand('<sfile>'), '[^. ]*$')
+    return 'g@'
+  endif
+  let sel_save = &selection
+  let &selection = "inclusive"
+  let reg_save = @@
 
-	if a:1 == 'char'	" Invoked from Visual mode, use gv command.
-		silent exe 'normal! gvy'
-	elseif a:1 == 'line'
-		silent exe "normal! '[V']y"
-	else
-		silent exe 'normal! `[v`]y'
-	endif
+  if a:1 == 'char'	" Invoked from Visual mode, use gv command.
+    silent exe 'normal! gvy'
+  elseif a:1 == 'line'
+    silent exe "normal! '[V']y"
+  else
+    silent exe 'normal! `[v`]y'
+  endif
 
-	execute "DB " . @@
+  execute "DB " . @@
 
-	let &selection = sel_save
-	let @@ = reg_save
+  let &selection = sel_save
+  let @@ = reg_save
 endfunc
 
 " Source my Config
-call SourceIfExists("~/.local_config/dadbod.vim")
+"call SourceIfExists("~/.local_config/dadbod.vim")
 
 command! DBSelect :call popup_menu(map(copy(g:dadbods), {k,v -> v.name}), #{
-			\callback: 'DBSelected'
-			\})
+      \callback: 'DBSelected'
+      \})
 
 func! DBSelected(id, result)
-	if a:result != -1
-		let b:db = g:dadbods[a:result-1].url
-		echomsg 'DB ' . g:dadbods[a:result-1].name . ' is selected.'
-	endif
+  if a:result != -1
+    let b:db = g:dadbods[a:result-1].url
+    echomsg 'DB ' . g:dadbods[a:result-1].name . ' is selected.'
+  endif
 endfunc
 
 xnoremap <expr> <Plug>(DBExe)     DBExe()
