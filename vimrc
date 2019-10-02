@@ -467,6 +467,9 @@ if !has('nvim')
   call deoplete#custom#option('yarp', v:true)
 endif
 
+" <TAB>: completion.
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+
 " ========= A.L.E ===================================== "
 " AutoComplete
 
