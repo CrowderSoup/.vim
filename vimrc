@@ -91,6 +91,7 @@ Plugin 'honza/vim-snippets'
 Plugin 'wakatime/vim-wakatime'
 Plugin gitlab.'dbeniamine/todo.txt-vim'
 Plugin 'tpope/vim-dadbod'
+Plugin 'jmcantrell/vim-virtualenv'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -488,7 +489,7 @@ let g:ale_fixers = {
 
 let g:ale_linters = {
       \   'go': ['govet', 'gofmt', 'golint', 'bingo'],
-      \   'python': ['pylint'],
+      \   'python': ['pylint', 'pyls'],
       \ }
 
 " Python Config
@@ -526,7 +527,7 @@ nmap <C-f> :NERDTreeFind<CR>
 
 let NERDTreeShowHidden=1
 
-let NERDTreeIgnore=['\~$', '\.git$', '.DS_Store', 'node_modules', '.vscode','.venv','__pycache__', '.pyc']
+let NERDTreeIgnore=['\~$', '\.git$', '.DS_Store', 'node_modules', '.vscode','.venv','__pycache__', '.pyc', '*.egg-info']
 
 " Close nerdtree and vim on close file
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
@@ -677,3 +678,16 @@ nmap <leader>dbb <Plug>(DBExeLine)
 
 " ================== Emmet-Vim ========================="
 let g:user_emmet_leader_key='<A-Z>'
+
+" ================== vim-virtualenv ===================="
+
+let g:virtualenv_auto_activate = 1
+
+py3 << EOF
+import os, sys, pathlib
+if 'VIRTUAL_ENV' in os.environ:
+    venv = os.getenv('VIRTUAL_ENV')
+    site_packages = next(pathlib.Path(venv, 'lib').glob('python*/site-packages'), None)
+    if site_packages:
+        sys.path.insert(0, str(site_packages))
+EOF
