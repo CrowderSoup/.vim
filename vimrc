@@ -488,7 +488,7 @@ let g:ale_fixers = {
       \ }
 
 let g:ale_linters = {
-      \   'go': ['govet', 'gofmt', 'golint', 'bingo'],
+      \   'go': ['govet', 'gofmt', 'golint', 'gopls'],
       \   'python': ['pylint', 'pyls'],
       \ }
 
