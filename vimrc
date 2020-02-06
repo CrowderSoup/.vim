@@ -677,7 +677,7 @@ omap <leader>db  <Plug>(DBExe)
 nmap <leader>dbb <Plug>(DBExeLine)
 
 " ================== Emmet-Vim ========================="
-let g:user_emmet_leader_key='<A-Z>'
+let g:user_emmet_leader_key='<C-c>'
 
 " ================== vim-virtualenv ===================="
 
