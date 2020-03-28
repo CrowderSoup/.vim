@@ -49,6 +49,7 @@ Plugin 'vim-ruby/vim-ruby'
 Plugin 'tpope/vim-rails'
 Plugin 'diepm/vim-rest-console'
 Plugin 'mattn/emmet-vim'
+Plugin 'OmniSharp/omnisharp-vim'
 
 " ----------------------------------------- "
 "  Files / Finders                          "
@@ -490,6 +491,7 @@ let g:ale_fixers = {
 let g:ale_linters = {
       \   'go': ['govet', 'gofmt', 'golint', 'gopls'],
       \   'python': ['pylint', 'pyls'],
+      \   'cs': ['OmniSharp'],
       \ }
 
 " Python Config
@@ -691,3 +693,6 @@ if 'VIRTUAL_ENV' in os.environ:
     if site_packages:
         sys.path.insert(0, str(site_packages))
 EOF
+
+" ================== OmniSharp ===================="
+let g:OmniSharp_server_use_mono = 1
