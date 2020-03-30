@@ -50,6 +50,7 @@ Plugin 'tpope/vim-rails'
 Plugin 'diepm/vim-rest-console'
 Plugin 'mattn/emmet-vim'
 Plugin 'OmniSharp/omnisharp-vim'
+Plugin 'OrangeT/vim-csharp'
 
 " ----------------------------------------- "
 "  Files / Finders                          "
@@ -696,3 +697,6 @@ EOF
 
 " ================== OmniSharp ===================="
 let g:OmniSharp_server_use_mono = 1
+
+" ================== vim-csharp ===================="
+au BufNewFile,BufRead *.razor compiler msbuild | set filetype=cshtml.html syntax=cshtml
