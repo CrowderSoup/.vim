@@ -55,7 +55,7 @@ Plugin 'OrangeT/vim-csharp'
 " ----------------------------------------- "
 "  Files / Finders                          "
 " ----------------------------------------- "
-Plugin 'junegunn/fzf.vim'
+Plugin 'junegunn/fzf'
 Plugin 'scrooloose/nerdtree'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 
@@ -69,7 +69,7 @@ Plugin 'ap/vim-buftabline'
 Plugin 'ntpeters/vim-better-whitespace'
 Plugin 'mhinz/vim-sayonara'
 Plugin 'terryma/vim-multiple-cursors'
-Plugin 'ryanoasis/vim-devicons'
+"Plugin 'ryanoasis/vim-devicons'
 Plugin 'majutsushi/tagbar'
 Plugin 'matze/vim-move'
 
@@ -268,7 +268,7 @@ set background=dark
 " let g:solarized_termtrans=1
 set t_Co=256
 colorscheme PaperColor
-set guifont=Fira\ Code:h15
+set guifont=FiraCode:h15
 set guioptions-=L
 
 " This comes first, because we have mappings that depend on leader
@@ -506,12 +506,12 @@ let g:airline#extensions#ale#enabled = 1
 let g:ale_completion_enabled = 0
 
 " ========= fzf ======================================= "
-set rtp+=/usr/local/opt/fzf
+set rtp+=~/.fzf
 function! s:find_git_root()
   return system('git rev-parse --show-toplevel 2> /dev/null')[:-2]
 endfunction
 
-command! ProjectFiles execute 'Files' s:find_git_root()
+command! ProjectFiles execute 'FZF ' s:find_git_root()
 
 map <C-p> :ProjectFiles<CR>
 
