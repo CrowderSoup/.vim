@@ -69,7 +69,7 @@ Plugin 'ap/vim-buftabline'
 Plugin 'ntpeters/vim-better-whitespace'
 Plugin 'mhinz/vim-sayonara'
 Plugin 'terryma/vim-multiple-cursors'
-"Plugin 'ryanoasis/vim-devicons'
+Plugin 'ryanoasis/vim-devicons'
 Plugin 'majutsushi/tagbar'
 Plugin 'matze/vim-move'
 
