@@ -110,7 +110,7 @@ set number                      " Show line numbers
 set backspace=indent,eol,start  " Makes backspace key more powerful.
 set showcmd                     " Show me what I'm typing
 set showmode                    " Show current mode.
-set clipboard=unnamed
+set clipboard=unnamedplus
 noremap <C-c> :'<,'>:w !clip.exe<CR>
 
 set noswapfile                  " Don't use swapfile
