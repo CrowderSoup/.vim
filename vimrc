@@ -8,7 +8,11 @@ let gitlab = 'https://gitlab.com/'
 " Plugins       			    			            "
 " ----------------------------------------- "
 " set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
+if has("win32") || has("win16")
+  set rtp+=~/vimfiles/bundle/Vundle.vim
+else
+  set rtp+=~/.vim/bundle/Vundle.vim
+endif
 call vundle#begin('~/.vim_plugins')
 
 " ----------------------------------------- "
@@ -100,7 +104,11 @@ call vundle#end()            " required
 filetype plugin indent on    " required
 
 " Source My Helpers
-source ~/.vim/helpers.vim
+if has("win32") || has("win16")
+  source ~/vimfiles/helpers.vim
+else
+  source ~/.vim/helpers.vim
+endif
 
 "
 " Settings
