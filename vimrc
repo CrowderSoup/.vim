@@ -62,6 +62,7 @@ Plugin 'OrangeT/vim-csharp'
 Plugin 'junegunn/fzf'
 Plugin 'scrooloose/nerdtree'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
+Plugin 'mcchrish/nnn.vim'
 
 " ----------------------------------------- "
 "  Interface / Usability                    "
@@ -543,6 +544,17 @@ let NERDTreeIgnore=['\~$', '\.git$', '.DS_Store', 'node_modules', '.vscode','.ve
 
 " Close nerdtree and vim on close file
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+
+"========== NerdTree ================================== "
+nnoremap <silent> <leader>f :NnnPicker<CR>
+
+let g:nnn#command = 'nnn -d'
+let g:nnn#set_default_mappings = 0
+let g:nnn#layout = { 'window': { 'width': 0.9, 'height': 0.6, 'highlight': 'Debug' } }
+let g:nnn#action = {
+      \ '<c-t>': 'tab split',
+      \ '<c-x>': 'split',
+      \ '<c-v>': 'vsplit' }
 
 " ========= vim-airline =============================== "
 
