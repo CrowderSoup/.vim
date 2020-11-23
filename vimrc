@@ -51,7 +51,6 @@ Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'tpope/vim-rails'
-Plugin 'diepm/vim-rest-console'
 Plugin 'mattn/emmet-vim'
 Plugin 'OmniSharp/omnisharp-vim'
 Plugin 'OrangeT/vim-csharp'
@@ -353,7 +352,6 @@ nmap <leader>w :w!<cr>
 " Center the screen
 nnoremap <space> zz
 
-
 " Move up and down on splitted lines (on small width screens)
 map <Up> gk
 map <Down> gj
@@ -413,6 +411,9 @@ else
   au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
 endif
 
+" Insert current datetime
+nnoremap <leader>D :put =strftime('%a %Y-%m-%d %H:%M:%S%z') <CR>
+
 " ----------------------------------------- "
 " File Type settings 			    		          "
 " ----------------------------------------- "
@@ -445,6 +446,10 @@ au BufRead,BufNewFile MAINTAINERS set ft=tom
 
 " spell check for git commits
 autocmd FileType gitcommit setlocal spell
+
+" curl bindings
+au BufNewFile,BufRead *.curl setlocal filetype=curl syntax=bash
+autocmd FileType curl nmap <buffer> <leader>r vipyPgvO<Esc>O<Esc>gv:!curl --config -<CR> <bar> :-1 <bar> :put =strftime('# %a %Y-%m-%d %H:%M:%S%z') <CR>
 
 " Wildmenu completion {{{
 set wildmenu
@@ -646,8 +651,6 @@ let g:jsx_ext_required = 0
 nnoremap <leader>gb :Gblame<CR>
 nnoremap <leader>gw :Gwrite<CR>
 
-" ========= Vim Rest Client =========================== "
-let g:vrc_output_buffer_name = '__VRC_OUTPUT.json'
 
 " ========= Vim Todo.txt =========================== "
 au filetype todo setlocal omnifunc=todo#Complete
