@@ -548,7 +548,7 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTree
 "========== NerdTree ================================== "
 nnoremap <silent> <leader>f :NnnPicker<CR>
 
-let g:nnn#command = 'nnn -d'
+let g:nnn#command = 'nnn -d ' . s:find_git_root()
 let g:nnn#set_default_mappings = 0
 let g:nnn#layout = { 'window': { 'width': 0.9, 'height': 0.6, 'highlight': 'Debug' } }
 let g:nnn#action = {
