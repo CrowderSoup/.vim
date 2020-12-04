@@ -76,6 +76,7 @@ Plugin 'terryma/vim-multiple-cursors'
 Plugin 'ryanoasis/vim-devicons'
 Plugin 'majutsushi/tagbar'
 Plugin 'matze/vim-move'
+Plugin 'tmux-plugins/vim-tmux-focus-events'
 
 " ----------------------------------------- "
 "  Git Integration                          "
