@@ -424,6 +424,9 @@ endif
 " Insert current datetime
 nnoremap <leader>D :put =strftime('%a %Y-%m-%d %H:%M:%S%z') <CR>
 
+" Get current file path
+nnoremap <leader>P :let @+ = expand("%:p")<cr>
+
 " ----------------------------------------- "
 " File Type settings 			    		          "
 " ----------------------------------------- "
