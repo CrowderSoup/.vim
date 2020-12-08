@@ -1,6 +1,15 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
+" Need to tell vim to use a specific python on osx
+if has("unix")
+  let s:uname = system("uname")
+  if s:uname == "Darwin\n"
+    let g:python_host_prog = '/Users/CrowderSoup/.pyenv/versions/global/bin/python'
+    let g:python3_host_prog = '/Users/CrowderSoup/.pyenv/versions/global/bin/python3'
+  endif
+endif
+
 " Some plugins are hosted on GitLab, thus:
 let gitlab = 'https://gitlab.com/'
 
