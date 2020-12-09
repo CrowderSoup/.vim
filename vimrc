@@ -63,6 +63,7 @@ Plugin 'tpope/vim-rails'
 Plugin 'mattn/emmet-vim'
 Plugin 'OmniSharp/omnisharp-vim'
 Plugin 'OrangeT/vim-csharp'
+Plugin 'puremourning/vimspector'
 
 " ----------------------------------------- "
 "  Files / Finders                          "
