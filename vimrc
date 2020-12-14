@@ -797,3 +797,7 @@ augroup END
 
 " ================== vim-csharp ===================="
 au BufNewFile,BufRead *.razor compiler msbuild | set filetype=cshtml.html syntax=cshtml
+
+" ================== vimspector ===================="
+let g:vimspector_enable_mappings = 'HUMAN'
+let g:vimspector_install_gadgets = [ 'debugpy', 'vscode-go' ]
