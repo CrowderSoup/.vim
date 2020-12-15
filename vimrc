@@ -1,15 +1,19 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
-" Need to tell vim to use a specific python on osx
+" Need to set a couple os specific things
 if has("unix")
   let s:uname = system("uname")
   if s:uname == "Darwin\n"
     let g:python_host_prog = '/Users/CrowderSoup/.pyenv/versions/global/bin/python'
     let g:python3_host_prog = '/Users/CrowderSoup/.pyenv/versions/global/bin/python3'
+
+    set clipboard=unnamed
   else
     let g:python_host_prog = '/home/crowdersoup/.pyenv/versions/global/bin/python'
     let g:python3_host_prog = '/home/crowdersoup/.pyenv/versions/global/bin/python3'
+
+    set clipboard=unnamedplus
   endif
 endif
 
@@ -132,8 +136,6 @@ set number                      " Show line numbers
 set backspace=indent,eol,start  " Makes backspace key more powerful.
 set showcmd                     " Show me what I'm typing
 set showmode                    " Show current mode.
-set clipboard=unnamed
-noremap <C-c> :'<,'>:w !clip.exe<CR>
 
 set noswapfile                  " Don't use swapfile
 set nobackup                    " Don't create annoying backup files
