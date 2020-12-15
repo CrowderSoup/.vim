@@ -7,6 +7,9 @@ if has("unix")
   if s:uname == "Darwin\n"
     let g:python_host_prog = '/Users/CrowderSoup/.pyenv/versions/global/bin/python'
     let g:python3_host_prog = '/Users/CrowderSoup/.pyenv/versions/global/bin/python3'
+  else
+    let g:python_host_prog = '/home/crowdersoup/.pyenv/versions/global/bin/python'
+    let g:python3_host_prog = '/home/crowdersoup/.pyenv/versions/global/bin/python3'
   endif
 endif
 
