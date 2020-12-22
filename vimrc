@@ -84,7 +84,7 @@ Plugin 'ntpeters/vim-better-whitespace'
 Plugin 'mhinz/vim-sayonara'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'ryanoasis/vim-devicons'
-Plugin 'majutsushi/tagbar'
+Plugin 'preservim/tagbar'
 Plugin 'matze/vim-move'
 Plugin 'tmux-plugins/vim-tmux-focus-events'
 
