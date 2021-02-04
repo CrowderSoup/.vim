@@ -525,7 +525,7 @@ let g:ale_fixers = {
 
 let g:ale_linters = {
       \   'go': ['govet', 'gofmt', 'golint', 'gopls'],
-      \   'python': ['pylint', 'pyls'],
+      \   'python': ['pylint', 'flake8', 'pyls'],
       \   'cs': ['OmniSharp'],
       \ }
 
