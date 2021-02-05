@@ -2,19 +2,17 @@ set nocompatible              " be iMproved, required
 filetype off                  " required
 
 " Need to set a couple os specific things
-if has("unix")
-  let s:uname = system("uname")
-  if s:uname == "Darwin\n"
-    let g:python_host_prog = '/Users/CrowderSoup/.pyenv/versions/global/bin/python'
-    let g:python3_host_prog = '/Users/CrowderSoup/.pyenv/versions/global/bin/python3'
+let s:uname = system("uname")
+if s:uname == "Darwin\n"
+  let g:python_host_prog = '/Users/CrowderSoup/.pyenv/versions/global/bin/python'
+  let g:python3_host_prog = '/Users/CrowderSoup/.pyenv/versions/global/bin/python3'
 
-    set clipboard=unnamed
-  else
-    let g:python_host_prog = '/home/crowdersoup/.pyenv/versions/global/bin/python'
-    let g:python3_host_prog = '/home/crowdersoup/.pyenv/versions/global/bin/python3'
+  set clipboard=unnamed
+else
+  let g:python_host_prog = $HOME.'/.pyenv/versions/global/bin/python'
+  let g:python3_host_prog = $HOME.'/.pyenv/versions/global/bin/python3'
 
-    set clipboard=unnamedplus
-  endif
+  set clipboard=unnamedplus
 endif
 
 " Some plugins are hosted on GitLab, thus:
@@ -496,9 +494,9 @@ map :pi :PluginInstall
 " ========= deoplete ================================== "
 let g:deoplete#enable_at_startup = 1
 call deoplete#custom#option({
-\ 'auto_refresh_delay': 0,
-\ 'num_processes': 5,
-\ })
+      \ 'auto_refresh_delay': 0,
+      \ 'num_processes': 5,
+      \ })
 
 if !has('nvim')
   call deoplete#custom#option('yarp', v:true)
