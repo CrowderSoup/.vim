@@ -4,8 +4,8 @@ filetype off                  " required
 " Need to set a couple os specific things
 let s:uname = system("uname")
 if s:uname == "Darwin\n"
-  let g:python_host_prog = '/Users/CrowderSoup/.pyenv/versions/global/bin/python'
-  let g:python3_host_prog = '/Users/CrowderSoup/.pyenv/versions/global/bin/python3'
+  let g:python_host_prog = expand('~/.pyenv/versions/global/bin/python')
+  let g:python3_host_prog = expand('~/.pyenv/versions/global/bin/python3')
 
   set clipboard=unnamed
 else
@@ -113,7 +113,7 @@ Plugin 'honza/vim-snippets'
 Plugin 'wakatime/vim-wakatime'
 Plugin gitlab.'dbeniamine/todo.txt-vim'
 Plugin 'tpope/vim-dadbod'
-Plugin 'jmcantrell/vim-virtualenv'
+"Plugin 'jmcantrell/vim-virtualenv'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -638,6 +638,7 @@ let g:multi_cursor_quit_key='<Esc>'
 
 " ========= SnipMate ================================== "
 "to prevent clash with youcompleteme, change snippet trigger
+let g:snipMate = { 'snippet_version' : 1 }
 imap <C-J> <esc>a<Plug>snipMateNextOrTrigger
 smap <C-J> <Plug>snipMateNextOrTrigger
 
@@ -722,19 +723,6 @@ nmap <leader>dbb <Plug>(DBExeLine)
 
 " ================== Emmet-Vim ========================="
 let g:user_emmet_leader_key='<C-c>'
-
-" ================== vim-virtualenv ===================="
-
-let g:virtualenv_auto_activate = 1
-
-py3 << EOF
-import os, sys, pathlib
-if 'VIRTUAL_ENV' in os.environ:
-    venv = os.getenv('VIRTUAL_ENV')
-    site_packages = next(pathlib.Path(venv, 'lib').glob('python*/site-packages'), None)
-    if site_packages:
-        sys.path.insert(0, str(site_packages))
-EOF
 
 " ================== OmniSharp ===================="
 " Don't autoselect first omnicomplete option, show options even if there is only
