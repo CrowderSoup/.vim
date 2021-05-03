@@ -97,6 +97,7 @@ Plugin 'tmux-plugins/vim-tmux-focus-events'
 "  Git Integration                          "
 " ----------------------------------------- "
 Plugin 'tpope/vim-fugitive'
+Plugin 'christoomey/vim-conflicted'
 Plugin 'airblade/vim-gitgutter'
 
 " ----------------------------------------- "
