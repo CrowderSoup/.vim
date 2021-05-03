@@ -99,6 +99,7 @@ Plugin 'tmux-plugins/vim-tmux-focus-events'
 Plugin 'tpope/vim-fugitive'
 Plugin 'christoomey/vim-conflicted'
 Plugin 'airblade/vim-gitgutter'
+Plugin 'christoomey/vim-conflicted'
 
 " ----------------------------------------- "
 "  Snippets                                 "
